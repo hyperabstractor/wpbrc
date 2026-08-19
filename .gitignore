@@ -1,0 +1,10 @@
+.env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+*.tmp
+data/users.json
+data/session.key
+data/*.tmp
