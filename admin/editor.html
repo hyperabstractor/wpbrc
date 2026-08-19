@@ -72,6 +72,22 @@
 <body>
   <!-- Decap CMS (open-source). CSS-only branding; no JavaScript; link layout untouched.
        Build: ONE Intelligence editor v3 — O icons scoped to sidebar only (top "+ New" button clean), nav verified working. -->
+  <script>
+    // crypto.randomUUID exists only on HTTPS/localhost. Staging on sslip.io is HTTP.
+    if (typeof crypto !== "undefined" && typeof crypto.randomUUID !== "function") {
+      crypto.randomUUID = function () {
+        var bytes = new Uint8Array(16);
+        if (crypto.getRandomValues) crypto.getRandomValues(bytes);
+        else for (var i = 0; i < 16; i++) bytes[i] = Math.floor(Math.random() * 256);
+        bytes[6] = (bytes[6] & 0x0f) | 0x40;
+        bytes[8] = (bytes[8] & 0x3f) | 0x80;
+        var hex = Array.prototype.map.call(bytes, function (b) {
+          return (b + 256).toString(16).slice(1);
+        }).join("");
+        return hex.slice(0, 8) + "-" + hex.slice(8, 12) + "-" + hex.slice(12, 16) + "-" + hex.slice(16, 20) + "-" + hex.slice(20);
+      };
+    }
+  </script>
   <script src="https://unpkg.com/decap-cms@^3.6.0/dist/decap-cms.js"></script>
 </body>
 </html>
