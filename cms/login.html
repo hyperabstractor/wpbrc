@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>WPBRC editor login</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/one-intelligence-mark.svg">
+  <style>
+    :root {
+      --copper:#9a5f2c; --copper-dk:#7a4a22; --ink:#23282d; --head:#171c21;
+      --muted:#6c6760; --cream:#faf7f2; --paper:#fff; --rule:#e4d9c8; --err:#b3402f;
+      --serif:Georgia,'Palatino Linotype','Book Antiqua',serif;
+      --sans:'Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; display: grid; place-items: center;
+      font-family: var(--sans); background: var(--head); color: var(--ink);
+    }
+    body::before {
+      content:""; position:fixed; top:0; left:0; right:0; height:4px; background:var(--copper);
+    }
+    .card {
+      width: min(400px, calc(100vw - 32px)); background: var(--paper);
+      border-radius: 12px; padding: 28px 28px 24px; border: 1px solid var(--rule);
+    }
+    .who { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--copper); margin: 0 0 6px; }
+    h1 { font-family: var(--serif); font-size: 22px; margin: 0 0 8px; color: var(--head); font-weight: 600; }
+    p { margin: 0 0 18px; color: var(--muted); font-size: 14px; line-height: 1.45; }
+    label { display: block; font-size: 13px; font-weight: 600; margin: 0 0 6px; }
+    input {
+      width: 100%; padding: 11px 12px; border: 1px solid var(--rule); border-radius: 8px;
+      font: inherit; margin-bottom: 14px;
+    }
+    input:focus { outline: 2px solid var(--copper); border-color: var(--copper); }
+    button {
+      width: 100%; padding: 12px; border: 0; border-radius: 8px; cursor: pointer;
+      background: var(--copper); color: #fff; font-weight: 600; font-size: 14px;
+    }
+    button:hover { background: var(--copper-dk); }
+    .err { {{error}}; color: var(--err); font-size: 13px; font-weight: 600; margin: 0 0 12px; }
+    .foot { margin: 14px 0 0; font-size: 12px; color: var(--muted); text-align: center; }
+  </style>
+</head>
+<body>
+  <form class="card" method="post" action="/login">
+    <p class="who">ONE Intelligence</p>
+    <h1>WPBRC editor</h1>
+    <p>Sign in with your editor account. There is no GitHub step.</p>
+    <p class="err">Wrong username or password.</p>
+    <input type="hidden" name="next" value="{{next}}">
+    <label for="username">Username</label>
+    <input id="username" name="username" autocomplete="username" required>
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" autocomplete="current-password" required>
+    <button type="submit">Sign in</button>
+    <p class="foot">Content saves to this server and the public pages rebuild automatically.</p>
+  </form>
+</body>
+</html>

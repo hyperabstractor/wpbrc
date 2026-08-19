@@ -1,7 +1,10 @@
-# Python packages used by the build and the free agents/checkers.
-# Dependabot watches this file and opens PRs for security + version updates.
+# Python packages used by the build, the CMS proxy (cms/), and the agents.
 markdown>=3.6
 requests>=2.31
 feedparser>=6.0.11
 beautifulsoup4>=4.12
 icalendar>=5.0
+fastapi>=0.115
+uvicorn[standard]>=0.32
+python-multipart>=0.0.9
+itsdangerous>=2.2

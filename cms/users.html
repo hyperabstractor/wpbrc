@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Editors · WPBRC</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/one-intelligence-mark.svg">
+  <style>
+    :root {
+      --copper:#9a5f2c; --copper-dk:#7a4a22; --copper-soft:#f3e9dc;
+      --ink:#23282d; --head:#171c21; --muted:#6c6760;
+      --cream:#faf7f2; --paper:#fff; --rule:#e4d9c8; --err:#b3402f; --ok:#2e7d52;
+      --serif:Georgia,'Palatino Linotype','Book Antiqua',serif;
+      --sans:'Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: var(--sans); color: var(--ink); background: var(--cream); }
+    body::before { content:""; position:fixed; top:0; left:0; right:0; height:4px; background:var(--copper); z-index:2; }
+    header {
+      background: var(--head); color: #fff; border-bottom: 3px solid var(--copper);
+    }
+    header .wrap { max-width: 800px; margin: 0 auto; padding: 18px 24px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: center; }
+    header .who { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #e7d3b9; }
+    header a { color: #e7d3b9; font-size: 13px; text-decoration: none; }
+    header a:hover { color: #fff; }
+    .wrap { max-width: 800px; margin: 0 auto; padding: 28px 24px 48px; }
+    h1 { font-family: var(--serif); font-size: 26px; margin: 0 0 6px; color: var(--head); font-weight: 600; }
+    .lead { color: var(--muted); margin: 0 0 22px; }
+    .banner { padding: 10px 12px; border-radius: 8px; font-size: 14px; font-weight: 600; margin: 0 0 16px; }
+    .banner.err { background: #fdecea; color: var(--err); {{error_display}}; }
+    .banner.ok { background: #e7f3ea; color: var(--ok); {{notice_display}}; }
+    .card { background: var(--paper); border: 1px solid var(--rule); border-radius: 12px; padding: 18px; margin-bottom: 18px; }
+    h2 { font-family: var(--serif); font-size: 18px; margin: 0 0 14px; color: var(--head); }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--rule); }
+    th { color: var(--muted); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+    .pill { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px; background: var(--copper-soft); color: var(--copper-dk); }
+    button, .btn {
+      font: inherit; font-size: 13px; font-weight: 600; padding: 8px 12px; border-radius: 8px;
+      border: 1px solid var(--rule); background: #fff; cursor: pointer; color: var(--ink);
+    }
+    button.primary { background: var(--copper); border-color: var(--copper); color: #fff; }
+    button.primary:hover { background: var(--copper-dk); }
+    button.danger { color: var(--err); }
+    label { display: block; font-size: 13px; font-weight: 600; margin: 0 0 6px; }
+    input, select {
+      width: 100%; padding: 10px 12px; border: 1px solid var(--rule); border-radius: 8px;
+      font: inherit; margin-bottom: 12px;
+    }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 640px) { .row { grid-template-columns: 1fr; } }
+    .hint { font-size: 12.5px; color: var(--muted); margin: 0 0 12px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="who">Signed in as {{who}}</div>
+      <div><a href="/admin/">← Site control</a> · <a href="/logout">Sign out</a></div>
+    </div>
+  </header>
+  <div class="wrap">
+    <h1>Editors</h1>
+    <p class="lead">Add board members here. They get their own login — there is no public registration and no GitHub account.</p>
+    <p class="banner err">{{error}}</p>
+    <p class="banner ok">{{notice}}</p>
+
+    <div class="card">
+      <h2>Add a person</h2>
+      <p class="hint">Share the username and password with them directly. Editors can change content; admins can also manage this list.</p>
+      <form method="post" action="/admin/users">
+        <div class="row">
+          <div>
+            <label for="username">Username</label>
+            <input id="username" name="username" required minlength="2" maxlength="32" pattern="[A-Za-z0-9._\-]+" autocomplete="off">
+          </div>
+          <div>
+            <label for="role">Role</label>
+            <select id="role" name="role">
+              <option value="editor" selected>Editor</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+        </div>
+        <label for="password">Temporary password</label>
+        <input id="password" name="password" type="password" required minlength="8" autocomplete="new-password">
+        <button class="primary" type="submit">Add user</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>People with access</h2>
+      <table>
+        <thead><tr><th>Username</th><th>Role</th><th></th></tr></thead>
+        <tbody>{{rows}}</tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

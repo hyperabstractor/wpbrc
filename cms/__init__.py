@@ -1,0 +1,1 @@
+"""Decap CMS filesystem proxy — no GitHub. See cms/app.py."""

@@ -1,16 +1,12 @@
 # =====================================================================
-# WPBRC content admin — free, open-source, no-code editing at /admin/
-# Runs on Decap CMS. Editors log in with GitHub via Netlify's OAuth provider.
-# Saving commits to the repo and Netlify rebuilds the site (see netlify.toml).
-#
-# LOGIN SETUP (one time): create a GitHub OAuth App, install it as a Netlify
-# authentication provider, and give editors write access to the repo. Steps are
-# in CMS-SETUP.md. Editors then click "Login with GitHub" at /admin.
+# WPBRC content admin — Decap CMS talking to the local filesystem proxy
+# in cms/ (FastAPI). Editors sign in at /login; Save writes JSON/markdown
+# on this server and runs build.py. No GitHub. See CMS-SETUP.md.
 # =====================================================================
 
 backend:
-  name: github
-  repo: onebusinesspb/wpbrc
+  name: proxy
+  proxy_url: /cms-api/v1
   branch: main
 
 media_folder: "assets/uploads"     # uploaded images are stored here
